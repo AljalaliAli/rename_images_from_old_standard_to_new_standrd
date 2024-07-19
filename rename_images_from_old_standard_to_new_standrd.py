@@ -2,6 +2,7 @@ import os
 import shutil
 import re
 from datetime import datetime
+import configparser
 
 def process_image_filenames(input_folder, output_folder, customer_id, machine_id):
     if not os.path.exists(output_folder):
@@ -34,16 +35,15 @@ def process_image_filenames(input_folder, output_folder, customer_id, machine_id
                     print(f"Skipping file {file} due to incorrect date format.")
             else:
                 print(f"Skipping file {file} due to incorrect filename format.")
- 
 
-# Example usage
+# Read configuration from config.ini
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-customer_id = '8'   # Change this to your customer ID
-machine_id = '3'    # Change this to your machine ID
+input_folder = config['paths']['input_folder']
+output_folder = config['paths']['output_folder']
+customer_id = config['settings']['customer_id']
+machine_id = config['settings']['machine_id']
 
-
-                    
-input_folder = r'D:\future link\AljalaliAli\OCR Tesseract Feintuning\OCR Test 001\Results\Mues\check the results\OLD_MDE\images_Mues_3_from_20.02.024 to 05.06.2024'
-output_folder = 'renamed_images'
+# Process image filenames
 process_image_filenames(input_folder, output_folder, customer_id, machine_id)
-
